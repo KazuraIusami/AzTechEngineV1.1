@@ -10,6 +10,7 @@
 		}
 		
 	.sprite {
+		
 		position: absolute;
 		background-size: cover;
 		background-position: center;
@@ -85,16 +86,38 @@
 		background-color: #7c7c7c;
 		padding: 5px;
 		opacity: 70%;
-		display: inline;
+		display: block;
 		z-index: 2;
 	}
+	<!-- .slot { -->
+		<!-- width: 30%; -->
+		<!-- height: 30%; -->
+		<!-- background-color: #9B9B9B; -->
+		<!-- text-align: center; -->
+		<!-- margin: 5px; -->
+		
+		<!-- display: inline; -->
+	<!-- } -->
+	<!-- .slot:hover { -->
+		<!-- background-color: #6C6C6C; -->
+		
+	<!-- } -->
 	.slot {
-		width: 30%;
-		height: 30%;
-		background-color: #9B9B9B;
-		text-align: center;
-		margin: 5px;
-		display: inline;
+	  display: inline-block;
+	  text-align:center;
+	  
+	  height: 60px;
+	  width: 120px;
+	  padding: 10px;
+	  margin: 10px;
+	  background-color: #B2B2B2;
+	  cursor: pointer;
+	  transition: background-color 0.3s ease;
+	}
+
+	/* Hover effect */
+	.slot:hover {
+		background-color: #464646;
 	}
 		
 		
@@ -114,6 +137,14 @@
 			}
 		}
 		
+		let deathConversation = {
+			name: "You have died.",
+			start: {
+				text: "<i> Abandon all hope, ye who enter </i>",
+				options: []
+			}
+		}
+		
 		let BarTalk = {
 			name: "Wendigo",
 			start: {
@@ -124,11 +155,11 @@
 			},
 			wendigoLore: {
 				text: "You know that little part of you that begs to be free? To do whatever it is you wish to do NOW? Heh...I know him all too well.",
-				options: []
+				options: [ {text: "Back", next: "start"} ]
 			},
 			drunk: {
 				text: "That spicy water you had seemed to have some effect on it, huh?",
-				options: []
+				options: [ {text: "Back", next: "start"} ]
 			}
 		}
 		
@@ -137,7 +168,9 @@
 			start: {
 				text: "Its easy to get over the taste when your mind is focused on...other things.",
 				options: [	{text: "Take a drink", next: "drink"},
-							{text: "Read label", next: "label"}]
+							{text: "Read label", next: "label"},
+							{text: "Take", next: "take"},
+							{text: "Place", next: "place"}]
 			
 			},
 			drink: {
@@ -145,17 +178,36 @@
 				options: [{text: "Back", next: "start"}]
 			},
 			label: {
-				text: "B &Sigma; 3 R",
+				text: "B &Sigma; 3 R <br> <i>The label on these bottles feels all too familiar to you...although you are more used to them rolling around the floor.</i>",
 				options: [{text: "Back", next: "start"}]
 			
+			},
+			take: {
+				text: "You pick up the beer",
+				options: []
+			},
+			takeResult: {
+				text: "You picked up the beer (ha alcoholic)",
+				options: []
+			},
+			place: {
+				text: "You put down the beer",
+				options: []
+			},
+			placeResult: {
+				text: "You put down the beer (hey good for you buddy!)",
+				options: []
 			}
+			
 		}
 		let WhiskyTalk = {
 			name: "Whisky",
 			start: {
 				text: "Fun fact: It is spelled differently based on where its from.",
 				options: [	{text: "Take a drink", next: "drink"},
-							{text: "Read label", next: "label"}]
+							{text: "Read label", next: "label"},
+							{text: "Take", next: "take"},
+							{text: "Place", next: "place"}]
 			
 			},
 			drink: {
@@ -166,6 +218,22 @@
 				text: "To make a long explanation short, whiskey (with an 'e') refers to grain spirits distilled in Ireland and the United States. Whisky (with no 'e') refers to Scottish, Canadian, or Japanese grain spirits.",
 				options: [{text: "Back", next: "start"}]
 			
+			},
+			take: {
+				text: "You pick up the beer",
+				options: []
+			},
+			takeResult: {
+				text: "You picked up the beer (ha alcoholic)",
+				options: []
+			},
+			place: {
+				text: "You put down the beer",
+				options: []
+			},
+			placeResult: {
+				text: "You put down the beer (hey good for you buddy!)",
+				options: []
 			}
 		}
 		let WineTalk = {
@@ -173,7 +241,9 @@
 			start: {
 				text: "A sinful blend indeed! ",
 				options: [	{text: "Take a drink", next: "drink"},
-							{text: "Read label", next: "label"}]
+							{text: "Read label", next: "label"},
+							{text: "Take", next: "take"},
+							{text: "Place", next: "place"}]
 			
 			},
 			drink: {
@@ -184,6 +254,22 @@
 				text: "A sinful blend indeed! This labels art was pretty much ripped straight from a real wine brand.",
 				options: [{text: "Back", next: "start"}]
 			
+			},
+			take: {
+				text: "You pick up the beer",
+				options: []
+			},
+			takeResult: {
+				text: "You picked up the beer (ha alcoholic)",
+				options: []
+			},
+			place: {
+				text: "You put down the beer",
+				options: []
+			},
+			placeResult: {
+				text: "You put down the beer (hey good for you buddy!)",
+				options: []
 			}
 		}
 		let RumTalk = {
@@ -191,7 +277,9 @@
 			start: {
 				text: "The Wine To Die For!",
 				options: [	{text: "Take a drink", next: "drink"},
-							{text: "Read label", next: "label"}]
+							{text: "Read label", next: "label"},
+							{text: "Take", next: "take"},
+							{text: "Place", next: "place"}]
 			
 			},
 			drink: {
@@ -202,8 +290,65 @@
 				text: "A sinful blend indeed! This labels art was pretty much ripped straight from a real wine brand.",
 				options: [{text: "Back", next: "start"}]
 			
+			},
+			take: {
+				text: "You pick up the beer",
+				options: []
+			},
+			takeResult: {
+				text: "You picked up the beer (ha alcoholic)",
+				options: []
+			},
+			place: {
+				text: "You put down the beer",
+				options: []
+			},
+			placeResult: {
+				text: "You put down the beer (hey good for you buddy!)",
+				options: []
 			}
 		}
+		
+		let PlacedObjectTalk = {
+			name: "Bottle from pocket",
+			start: {
+				text: "That bottle sure was uncomfortable in my pocket",
+				options: []
+			}
+		}
+		
+		
+		let GoldItem = {
+			name: "Gold Coins",
+			start: {
+				text: "Perfectly circular, flat disks of equal size. Strange runes cover the surfaces, indistinguishable to make out from one another. <br> They clack together in your pockets, occasionally ringing your ears.",
+				options: []
+			}
+		}
+		
+		let wendigosChainTree = {
+			name: "The Wendigo's Chain",
+			start: {
+				text: "Twisted, wrought iron forming links, connected into a massive chain. This thing is a thing of beauty, don't drop it.",
+				options: []
+			}
+		}
+		let IronicLetter = {
+			name: "A Letter To Wendigo (Yeah, guy on the floor)",
+			start: {
+				text: "<i>An old wrinkled letter is in his pocket, it seems as though it has been carefully folded, as though he was taking great care of it. Perhaps of great importance to him?</i>",
+				options: [{text: "Unfold the old, fragile letter", next: "read"}]
+			},
+			read: {
+				text: "<i>You unfold the letter, and it splits right in two despite your efforts to keep it together....Now Destroyed, you are still able to read it.</i>" +
+						"<br> <br> Dear My Loving Husband, <br> How I do hope you are doing well since my last seeing you...I do hope to see you very soon! Although...I have been feeling very sick recently... <br> Love, Your loving wife!!! (P.S. I really hope you dont eventually die mourning my death)" + 
+						" <br> <br> <i>In a slightly shakier handwriting, a note is sketched on the back. 'How I loved my late wife...she died shortly after sending this letter from across the world...How i do miss her...although her side note is quite strange'</i>",
+						options: []
+			}
+		}
+		
+		
+		
 		
 		let conversationNode = "start";
 		let conversationTree = PreLoad;
@@ -232,7 +377,9 @@
 						existingItem.quantity += item2.quantity;
 					} else {
 						// If the item does not exist, add it to the first array
-						arr1.push({ name: item2.name, quantity: item2.quantity });
+						
+							
+						arr1.push({ name: item2.name, quantity: item2.quantity, conversationTree: item2.conversationTree});
 					}
 				});
 
@@ -258,10 +405,10 @@
 	//ENTITY CLASS		
 	
 			let EntityList = [];
-			let CollisionArray = [];
+			<!-- let CollisionArray = []; -->
 			
 			class Entity {
-				constructor(urlFolder, x, y, size, type, name){
+				constructor(urlFolder, x, y, size, type, name, weapon = {name: "Bare Hands", tier: 1, type: 1}){
 				this.urlFolder = urlFolder;
 				this.url = this.urlFolder + "/Front.gif";
 				
@@ -273,7 +420,7 @@
 				this.name = name;	//this will be the elements ID in the html
 				this.velocity = {x: 0, y: 0};
 				this.targetedPos = { x : 0, y : 0};
-				this.moveSpeed = 0.5;
+				this.moveSpeed = 1;
 				this.distanceToTarget = {x: Math.abs(this.x - this.targetedPos.x), y: Math.abs(this.y - this.targetedPos.y)};
 				
 				this.facedDirection = "Back";
@@ -281,11 +428,18 @@
 				this.onclickEnabled = false;
 				
 				this.wireFrameEnabled = true;
+				
+					//WEAPON STUFF
+						this.weapon = weapon;
 					
-				this.attackPower = getRandomfromInt(10);
+				this.attackPower = (weapon.tier * weapon.type)*(weapon.tier * weapon.type);
+				
+				
 				this.healthPoints = getRandomfromInt(1000);
 				
 				this.conversationTree = PreLoad;
+				
+				this.targetedEntity = [];
 				
 				this.inventory = []; //Inventory Array
 				
@@ -297,6 +451,7 @@
 				spawn(){
 				
 				//creating the sprite
+				
 					const newSprite = document.createElement("div");
 					newSprite.className = "sprite";
 					this.SpriteInterval = setInterval( () => {
@@ -313,7 +468,6 @@
 					 const tooltip = document.createElement("div");
 					tooltip.className = "tooltip";
 					newSprite.appendChild(tooltip);
-					
 					
 					document.body.appendChild(newSprite);
 					newSprite.setAttribute("id", this.name);
@@ -344,6 +498,7 @@
 					this.toolTipInterval = setInterval( () => {
 								tooltip.innerHTML = " ' " + this.name 
 											+ "' <br> HP : " + this.healthPoints 
+											+ " <br> WPN : " + this.weapon.name
 											+ " <br> X: " + Math.floor(this.x) + " <br> Y: " + Math.floor(this.y) 
 											+ "<br> Distance: " + Math.floor(this.distanceToTarget.x) + " " 
 											+ Math.floor(this.distanceToTarget.y) + "<br> TYPE: " + this.type +  " <br> ATTACK: " + this.attackPower ;
@@ -390,16 +545,18 @@
 												
 												
 												
-												
+												//Jesus this is sketchy. First, a catch all if statement to see if we are the player.
+													//Then, we have ANOTHER if statement to see what the other entity is
 												if(this.type === "Player"){
 													if(EntityList[i].type === "Monster"){
 														console.log("Interacting with Monster");
 														//"Fuck it lets make em fight" -Satoshi Tajiri
-														<!-- this.healthPoints -= EntityList[i].attackPower; -->
-														<!-- EntityList[i].healthPoints -= this.attackPower; -->
+														
 															this.targetedEntity = EntityList[i];
-															<!-- console.log(this.targetedEntity); -->
+															<!-- console.log(this.targetedEntity.name + " is now is now fighting " + this.name); -->
+															if(this.targetedEntity.healthPoints > 1){
 															this.startAttack(this.targetedEntity);
+															};
 														
 														if(this.healthPoints <= 0){
 																console.log("Player has died");
@@ -410,6 +567,9 @@
 													if(EntityList[i].type === "NPC"){
 														console.log("Interacting with NPC");
 														 //"only when a mosquito lands om your testicle, will you realise theres a way to solve a problem without using violence" -Confusius
+														 
+														 this.targetedEntity = EntityList[i];
+														 
 														 if(conversationTree != EntityList[i].conversationTree){
 														 conversationNode = "start";
 														 conversationTree = EntityList[i].conversationTree;
@@ -423,43 +583,47 @@
 									};
 										
 								this.distanceToTarget = {x: Math.abs(this.x - this.targetedPos.x), y: Math.abs(this.y - this.targetedPos.y)};
-								this.updatePos() }, FRAMERATE); //So this says "Move it by velocity everytime"
+								this.updatePos() }, FRAMERATE); //So this says "Move it by velocity everytime" while also checking for collisions
 					
 					this.directionInterval = setInterval(() => {
-						// Change velocity toward the target
-						if (this.x < this.targetedPos.x) {
-							this.velocity.x = this.moveSpeed;
-						} else if (this.x > this.targetedPos.x) {
-							this.velocity.x = this.moveSpeed * -1;
-						}else {
-							
-							this.velocity.x = 0;
-						}
+					
+				
+							// Change velocity toward the target
+							if (this.x < this.targetedPos.x) {
+								this.velocity.x = this.moveSpeed;
+							} else if (this.x > this.targetedPos.x) {
+								this.velocity.x = this.moveSpeed * -1;
+							}else if( ( this.x - this.targetedPos.x) < this.moveSpeed){
+								
+								this.velocity.x = 0;
+								this.targetedPos.x = this.x;
+							}
 
-						if (this.y < this.targetedPos.y) {
-							this.velocity.y =  this.moveSpeed;
-						} else if (this.y > this.targetedPos.y) {
-							this.velocity.y =  this.moveSpeed * -1;
-						} else {
-							this.velocity.y = 0;
-						}
+							if (this.y < this.targetedPos.y) {
+								this.velocity.y =  this.moveSpeed;
+							} else if (this.y > this.targetedPos.y) {
+								this.velocity.y =  this.moveSpeed * -1;
+							}else if( ( this.y - this.targetedPos.y) < this.moveSpeed){
+								this.velocity.y = 0;
+								this.targetedPos.y = this.y;
+							}
 
 						// Change faced direction
 						if (Math.abs(this.distanceToTarget.x) > Math.abs(this.distanceToTarget.y)) {
 							if (this.targetedPos.x > this.x) {
 								this.facedDirection = "Right";
-								this.url = this.urlFolder + "/" + this.facedDirection + ".gif";
+								
 							} else if (this.targetedPos.x < this.x) {
 								this.facedDirection = "Left";
-								this.url = this.urlFolder + "/" + this.facedDirection + ".gif";
+								
 							}
 						} else if (Math.abs(this.distanceToTarget.y) > Math.abs(this.distanceToTarget.x)) {
 							if (this.targetedPos.y > this.y) {
 								this.facedDirection = "Front";
-								this.url = this.urlFolder + "/" + this.facedDirection + ".gif";
+								
 							} else if (this.targetedPos.y < this.y) {
 								this.facedDirection = "Back";
-								this.url = this.urlFolder + "/" + this.facedDirection + ".gif";
+								
 							}
 						} else if(this.healthPoints > 1) { 
 							this.url = this.urlFolder + "/idle/" + this.facedDirection + ".gif";
@@ -467,10 +631,22 @@
 							this.url = this.urlFolder + "/death/" + this.facedDirection + ".gif";
 							
 						}
+						if(Math.abs(this.distanceToTarget.y) > 1 || (Math.abs(this.distanceToTarget.x) > 1)){
+							this.url = this.urlFolder + "/" + this.facedDirection + ".gif";
+						}
+						
+						
+						<!-- //CHANGE SIZE TO GIVE THE ILLUSION OF DISTANCE (Early in dev and needs works) -->
+						<!-- this.size = this.y; -->
+						
 					}, FRAMERATE);
 					
-							
+					this.weaponInterval = setInterval(() => {
+						this.attackPower = (this.weapon.tier * this.weapon.type)*(this.weapon.tier * this.weapon.type);
+					}, FRAMERATE);		
 				}
+				
+				
 				
 				distanceToEntity(target){
 					const x1 = this.x;
@@ -500,9 +676,12 @@
 					this.attackInterval = setInterval(() => { 
 							
 						if(this.distanceToEntity(target) < startDistance+50){
+						
+							document.getElementById(target.name).style.border = "1px dotted red";
+							
 							target.healthPoints -= this.attackPower;
 							this.healthPoints -= target.attackPower;
-							console.log()
+							
 								if(target.healthPoints < 0){	
 								
 									//LOOTING
@@ -510,15 +689,18 @@
 									
 									
 									InventoryUI.update(EntityList[0]);
-									target.type = "Corpse";
+									this.targetedEntity = [];
+									<!-- target.type = "Corpse"; -->
 									clearInterval(this.attackInterval);
 									this.attackInterval = false;
 								}
 								if(this.healthPoints < 0){
+									document.getElementById(target.name).style.border = "none";
 									clearInterval(this.attackInterval);
 									this.attackInterval = false;
 								}
 						}else {
+							document.getElementById(target.name).style.border = "none";
 							clearInterval(this.attackInterval);
 							this.attackInterval = false;
 						}
@@ -531,14 +713,15 @@
 				remove(){
 					const elementToRemove = document.getElementById(this.name);
 					if (elementToRemove) {
-						elementToRemove.parentNode.removeChild(elementToRemove);
+						document.body.removeChild(elementToRemove);
 							clearInterval(this.toolTipInterval);
 							clearInterval(this.SpriteInterval);
 							clearInterval(this.moveInterval);
 							clearInterval(this.directionInterval);
 							clearInterval(this.keyBoardInterval);
 							clearInterval(this.deathInterval);
-							clearInterval(this.attackInterval)
+							clearInterval(this.attackInterval); 
+							clearInterval(this.weaponInterval);
 						}
 						 // Remove the entity from the EntityList
 							const index = EntityList.findIndex(entity => entity.name === this.name);
@@ -618,7 +801,7 @@
 			//This function has been changed so that it does not clear the player.
 				function clearEntities(){
 					
-						 for (let i = EntityList.length -1; i >= 1; i--) {
+						 for (let i = EntityList.length ; i > 0; i--) {
 							// Assuming remove is a method you've defined in your Entity class
 							if (EntityList[i] && typeof EntityList[i].remove === 'function') {
 								EntityList[i].remove();
@@ -726,11 +909,10 @@
 				
 					constructor(){
 						this.Display = document.createElement("div");
-						this.Display.id = "inventoryDisplay"
-						
-						this.DisplayElement = document.createElement("div");
-						
+						this.Display.id = "inventoryDisplay";
 						this.Display.className = "InvDisplay";
+						
+						this.DisplayElement = document.createElement("div"); //So this is for the slots, but the name doesnt seem to suggest so
 						
 						
 						var moveInvButton = document.createElement("button");
@@ -775,9 +957,52 @@
 					}
 					
 					update(targetInventory) {
-						this.DisplayElement.innerHTML = "<br>INVENTORY OF " + targetInventory.name + "<br>";
+					
+						
+						
+						this.DisplayElement.innerHTML = "<br>INVENTORY OF " + targetInventory.name + "<br><hr><br>";
+						
+						
 						for (let j = 0; j < targetInventory.inventory.length; j++) {
-							this.DisplayElement.innerHTML += " <div class='slot'> " + targetInventory.inventory[j].name + " ( " + targetInventory.inventory[j].quantity + " ) </div> ";
+							
+						// Check if the quantity is greater than 0
+							if (targetInventory.inventory[j].quantity > 0) {
+							  <!-- this.DisplayElement.innerHTML += " <div class='slot' id= invSlot" + j + "> " + targetInventory.inventory[j].name + " ( " + targetInventory.inventory[j].quantity + " ) </div> "; -->
+							  
+								<!-- //ONCLICK FOR ITEMS -->
+									
+										<!-- document.getElementById("invSlot"+j).onmousedown = () =>{ -->
+											<!-- console.log(document.getElementById("invSlot"+j)); -->
+											<!-- if(targetInventory.inventory[j].conversationTree){ -->
+												<!-- conversationTree = targetInventory.inventory[j].conversationTree; -->
+											<!-- }else{ -->
+												<!-- conversationTree = PreLoad; -->
+											<!-- }; -->
+											<!-- conversationNode = "start"; -->
+											<!-- UpdateConversationDisplay(); -->
+										<!-- }; -->
+										
+										<!-- APPEND CHILD -->
+									const newSlot = document.createElement("button");
+									newSlot.innerHTML = targetInventory.inventory[j].name + "( " + targetInventory.inventory[j].quantity + " )";
+									newSlot.setAttribute("class", "slot");
+									newSlot.setAttribute("id", "invSlot"+j);
+									
+									newSlot.addEventListener("click", () => {
+										conversationTree = targetInventory.inventory[j].conversationTree;
+										
+										conversationNode = "start";
+										UpdateConversationDisplay();
+									})
+									
+									this.DisplayElement.appendChild(newSlot);
+									
+							} else {
+							  // Quantity is 0, remove the item from the array
+							  targetInventory.inventory.splice(j, 1);
+							  // Adjust the loop variable to account for the removed item
+							  j--;
+							}
 						}
 					}
 				
@@ -794,7 +1019,7 @@
 								
 								
 								
-								EntityList[0].inventory.push( {name: "Gold", quantity: getRandomfromInt(100)});
+								EntityList[0].inventory.push( {name: "Gold", quantity: getRandomfromInt(100), conversationTree: GoldItem});
 								
 								
 								InventoryUI.update(EntityList[0]);
@@ -866,11 +1091,10 @@
 						
 					}
 					generate(){
-						
-						//Apparently I dont already have a variable for global room declaration? 
+							clearEntities();
 							currentRoom = this.roomName;
 						
-						clearEntities();
+						//Put player on spawnpoint and set its targeted
 						
 						EntityList[0].x = this.SpawnPoint.x;
 						EntityList[0].y = this.SpawnPoint.y;
@@ -885,32 +1109,51 @@
 																this.EntitiesToSpawn[i].size,							//Size
 																this.EntitiesToSpawn[i].type,							//Type
 																this.EntitiesToSpawn[i].name);							//Name
-							//If TargetedPos is specified, set it to that. Otherwise, set it to current Pos.			
-								if(this.EntitiesToSpawn[i].targetedPos){
-									EntityList[i+1].targetedPos = {x: this.EntitiesToSpawn[i].targetedPos.x, y: this.EntitiesToSpawn[i].targetedPos.y};
-								}else{
-									EntityList[i+1].targetedPos = {x: this.EntitiesToSpawn[i].x, y: this.EntitiesToSpawn[i].y};
-								}; 
-							
-							//If facedDirection is specified, set it to that. Otherwise, set it to front.
-								if(this.EntitiesToSpawn[i].facedDirection){
-									EntityList[i+1].facedDirection = this.EntitiesToSpawn[i].facedDirection;
-								}else {
-									EntityList[i+1].facedDirection = "front";
-								}
+								//If TargetedPos is specified, set it to that. Otherwise, set it to current Pos.			
+									if(this.EntitiesToSpawn[i].targetedPos){
+										EntityList[i+1].targetedPos = {x: this.EntitiesToSpawn[i].targetedPos.x, y: this.EntitiesToSpawn[i].targetedPos.y};
+									}else{
+										EntityList[i+1].targetedPos = {x: this.EntitiesToSpawn[i].x, y: this.EntitiesToSpawn[i].y};
+									}; 
 								
-							//If there is a specified inventory, set it to that. Otherwise, set it to a few gold? For now?
-								if(this.EntitiesToSpawn[i].inventoryToSet){
-									for(let k = 0; k < this.EntitiesToSpawn[i].inventoryToSet.length; k++){
-										EntityList[i+1].inventory.push( {name: this.EntitiesToSpawn[i].inventoryToSet[k].name, quantity: this.EntitiesToSpawn[i].inventoryToSet[k].quantity} )
+								//If facedDirection is specified, set it to that. Otherwise, set it to front.
+									if(this.EntitiesToSpawn[i].facedDirection){
+										EntityList[i+1].facedDirection = this.EntitiesToSpawn[i].facedDirection;
+									}else {
+										EntityList[i+1].facedDirection = "front";
 									}
-								}else {
-									EntityList[i+1].inventory.push( {name: "Gold", quantity: getRandomfromInt(100)} )
-								}
-								
-								
-								EntityList[i+1].conversationTree = this.EntitiesToSpawn[i].linkToConversationTree;
-							}
+									
+								//If there is a specified inventory, set it to that. Otherwise, set it to a few gold? For now?
+									if (this.EntitiesToSpawn[i].inventoryToSet) {
+										for (let k = 0; k < this.EntitiesToSpawn[i].inventoryToSet.length; k++) {
+											const inventoryItem = {
+												name: this.EntitiesToSpawn[i].inventoryToSet[k].name,
+												quantity: this.EntitiesToSpawn[i].inventoryToSet[k].quantity,
+											};
+
+											// Set conversationTree for items in the inventory if it exists
+											if (this.EntitiesToSpawn[i].inventoryToSet[k].hasOwnProperty('conversationTree')) {
+												inventoryItem.conversationTree = this.EntitiesToSpawn[i].inventoryToSet[k].conversationTree;
+											}
+
+											EntityList[i + 1].inventory.push(inventoryItem);
+										}
+									} else {
+										// Set a default inventory item (e.g., Gold) if no specific inventory is specified
+										EntityList[i + 1].inventory.push({ name: "Gold", quantity: getRandomfromInt(100), conversationTree: GoldItem });
+									}
+									//If there is a specified weapon, set it to that. No need to have the else statement because the Entity class already assigns Bare Fists
+							
+										if(this.EntitiesToSpawn[i].weapon){
+											EntityList[i + 1].weapon = this.EntitiesToSpawn[i].weapon;
+										}					
+									//Set the inventory
+									EntityList[i+1].conversationTree = this.EntitiesToSpawn[i].linkToConversationTree;
+										
+										
+							};
+							
+							
 							
 							//Set the Z index of the player to be above everything else	
 								document.getElementById(EntityList[0].name).style.zIndex = 1;
@@ -926,23 +1169,8 @@
 								}
 							}, FRAMERATE);
 							
-							
+							linkDoors();
 						
-							<!-- if(this.doors){ -->
-							<!-- this.doorInterval = setInterval(() => { -->
-									<!-- for(let i = 0; i < this.doors.length; i++){ -->
-										<!-- if(EntityList[0].x > this.doors[i].xMin && EntityList[0].x < this.doors[i].xMax){ -->
-											<!-- if(EntityList[0].y > this.doors[i].yMin && EntityList[0].y < this.doors[i].yMax){  -->
-												
-												<!-- this.doors[i].room.generate(); -->
-												<!-- clearInterval(this.doorInterval); -->
-											<!-- } -->
-										<!-- } -->
-									<!-- } -->
-								<!-- }, FRAMERATE); -->
-							<!-- } -->
-							
-							
 						
 						document.body.style.backgroundImage = "url(" + this.imgUrl + ")";
 						
@@ -950,6 +1178,7 @@
 					addDoor(xMin, xMax, yMin, yMax, destination){
 						this.doorsArray.push( setInterval( () => {
 											if(EntityList[0].x > xMin && EntityList[0].x < xMax && EntityList[0].y > yMin && EntityList[0].y < yMax){
+												
 												destination.generate();
 												
 												for(let i = 0; i < this.doorsArray.length; i++){
@@ -960,9 +1189,7 @@
 					}
 				}
 			
-			let EmptyCollisions = [
-				{xMin: 0, xMax: 1, yMin: 0, yMax: 1}
-			];
+			
 			
 		
 			
@@ -975,10 +1202,22 @@
 					type:"NPC",
 					name:"Wendigo",
 					
-					inventoryToSet: [{name: "Wendigo Chain", quantity: 1}],
+					inventoryToSet: [{name: "The True Wendigo Tablet", quantity: 1, conversationTree: PreLoad}],
 					
 					facedDirection: "right",
 					linkToConversationTree: BarTalk
+					},
+					{urlFolder: "Wendigoo",
+					x:1505, y:442,
+					size: 400,
+					type:"Monster",
+					name:"Drunken Fool",
+					
+					inventoryToSet: [{name: "Chain of Wendigo", quantity: 1, conversationTree: wendigosChainTree}, {name: "Letter from Mrs. Wendigo", quantity: 1, conversationTree: IronicLetter}],
+					
+					facedDirection: "back",
+					linkToConversationTree: PreLoad,
+					weapon: {name: "Bone Gloves", tier: 3, type: 1}
 					},
 					{urlFolder: "Beer",
 					x:835, y:212,
@@ -987,10 +1226,11 @@
 					name:"Beer",
 					
 					facedDirection: "front",
-					linkToConversationTree: BeerTalk
+					linkToConversationTree: BeerTalk,
+					weapon: {name: "Damn this bottle got hands", tier: 1, type: 1}
 					},
 					{urlFolder: "Whisky",
-					x:1035, y:212,
+					x:1035, y:222,
 					size: 200,
 					type:"NPC",
 					name:"Whisky",
@@ -1018,21 +1258,24 @@
 					},
 			];
 			
+			let EmptyCollisions = [
+				{xMin: 0, xMax: 1, yMin: 0, yMax: 1}
+			];
 			let barRoomCollision = [ 
-				{xMin: 0, xMax: 1, yMin: 0, yMax: 1} //TABLE
+				{xMin: 0, xMax: 700, yMin: 161, yMax: 350} //TABLE
 			];
 										
 			let BarRoom = new room(
 										"THEBAR.png", 							//BACKGROUND IMAGE
-										{xMax: 1980, xMin: 0, yMax: 1200, yMin:0 }, //MAP LIMITS
+										{xMax: 1980, xMin: 0, yMax: 550, yMin:0 }, //MAP LIMITS
 										barEntities,								//ENEMY SET
 										{x:552, y:475},							//SPAWN POINT
-										barRoomCollision,						//STATIC COLLISIONS
+										EmptyCollisions,						//STATIC COLLISIONS
 										"Bar Room")								//NAME OF ROOM
 										
 			let BarRoomDark = new room(
 										"THEBARDARK.png", 							//BACKGROUND IMAGE
-										{xMax: 1980, xMin: 0, yMax: 1200, yMin:0 }, //MAP LIMITS
+										{xMax: 1980, xMin: 0, yMax: 550, yMin:0 }, //MAP LIMITS
 										barEntities,								//ENEMY SET
 										{x:552, y:475},							//SPAWN POINT
 										barRoomCollision,						//STATIC COLLISIONS
@@ -1040,16 +1283,16 @@
 										
 			let AlleyWay = new room(
 										"ALLEYWAY.png", 							//BACKGROUND IMAGE
-										{xMax: 1980, xMin: 0, yMax: 1200, yMin:0 }, //MAP LIMITS
+										{xMax: 1980, xMin: 0, yMax: 550, yMin:0 }, //MAP LIMITS
 										EmptyEntitySet,								//ENEMY SET
-										{x:552, y:475},							//SPAWN POINT
+										{x:750, y:450},							//SPAWN POINT
 										EmptyCollisions,						//STATIC COLLISIONS
 										"Alley",								//NAME OF ROOM
 										[{xMin: 375, xMax: 500, yMin: 0, yMax: 259, room: BarRoom}])		//DOORS						
 										
 			let AlleyWaySide = new room(
 										"ALLEYSIDE.png", 							//BACKGROUND IMAGE
-										{xMax: 1980, xMin: 0, yMax: 1200, yMin:0 }, //MAP LIMITS
+										{xMax: 1980, xMin: 0, yMax: 550, yMin:0 }, //MAP LIMITS
 										EmptyEntitySet,								//ENEMY SET
 										{x:552, y:475},							//SPAWN POINT
 										EmptyCollisions,						//STATIC COLLISIONS
@@ -1057,31 +1300,159 @@
 										
 			let AlleyWayLong = new room(
 										"AlleyWayLong.png", 							//BACKGROUND IMAGE
-										{xMax: 1980, xMin: 0, yMax: 1200, yMin:0 }, //MAP LIMITS
+										{xMax: 1980, xMin: 0, yMax: 550, yMin:0 }, //MAP LIMITS
 										EmptyEntitySet,								//ENEMY SET
 										{x:552, y:475},							//SPAWN POINT
 										EmptyCollisions,						//STATIC COLLISIONS
 										"Alley Long")								//NAME OF ROOM
 										
+			let BarExterior = new room(
+										"BarExterior.png", 							//BACKGROUND IMAGE
+										{xMax: 1980, xMin: 0, yMax: 550, yMin:0 }, //MAP LIMITS
+										EmptyEntitySet,								//ENEMY SET
+										{x:552, y:475},							//SPAWN POINT
+										EmptyCollisions,						//STATIC COLLISIONS
+										"Bar Exterior")								//NAME OF ROOM
+										
+			let BarExteriorFront = new room(
+										"BarExteriorFront.png", 							//BACKGROUND IMAGE
+										{xMax: 1980, xMin: 0, yMax: 550, yMin:0 }, //MAP LIMITS
+										EmptyEntitySet,								//ENEMY SET
+										{x:552, y:475},							//SPAWN POINT
+										EmptyCollisions,						//STATIC COLLISIONS
+										"Bar Exterior Front")								//NAME OF ROOM
+									
+			let MerchantRoom = new room(
+										"Merchant.png", 							//BACKGROUND IMAGE
+										{xMax: 1980, xMin: 0, yMax: 550, yMin:0 }, //MAP LIMITS
+										EmptyEntitySet,								//ENEMY SET
+										{x:552, y:475},							//SPAWN POINT
+										EmptyCollisions,						//STATIC COLLISIONS
+										"Merchant Room")								//NAME OF ROOM
+										
+			let HallwayRoom = new room(
+									"Hallway1.png",
+									{xMax: 950, xMin: 600, yMax: 550, yMin: 155},
+									EmptyEntitySet,
+									{x:843, y:215},
+									barRoomCollision,
+									"Hallway Start"
+									);
+			
 				function linkDoors(){
 				
 					if(currentRoom === "Alley"){
-						AlleyWay.addDoor(360, 550, 0, 246, BarRoom);
+						AlleyWay.addDoor(400, 620, 0, 500, BarRoom);
+						AlleyWay.addDoor(1400, 2000, 0, 900, AlleyWaySide);
 					}
 					if(currentRoom === "Bar Room" || currentRoom === "Bar Room Dark"){
-						BarRoom.addDoor(550, 850, 550, 900, AlleyWay);
+						BarRoom.addDoor(550, 850, 545, 900, AlleyWay);
 					}
-					
+					if(currentRoom === "Alley Side" ){
+						AlleyWaySide.addDoor(0, 300, 0, 900, AlleyWay);
+					}
 					
 				}
 
-						//TEMP VARIABLE
+						//TEMP VARIABLE for making wendigo appear after player drinks
 							let drunkMeter = 0;
 			
 											
 			let DeathRoom = new room('DeathZone.png',  {xMax: screen.width, xMin: 0, yMax: screen.height, yMin: 0 }, EmptyEntitySet, {x: 750, y:320}, EmptyCollisions, "Death Zone");	//PLACE FOR DEATH				
 
-			let roomContainer = [BarRoom, BarRoomDark, AlleyWay, AlleyWayLong];
+			let roomContainer = [BarRoom, BarRoomDark, AlleyWay, AlleyWayLong, BarExterior, BarExteriorFront, MerchantRoom, HallwayRoom];
+			
+			let weaponContainer = [{name: "Bare Hands", tier: 1, type: 1},{name: "Kamehameha", tier: 3, type: 3}, {name: "Bone Gloves", tier: 3, type: 1} ]
+			
+			function takeEntity(entityName) { //Fun little temporary functions for testing purposes (definitely not goofing around)
+				
+				
+					<!-- EntityList[2].remove(); -->
+					
+						//Seriously? Youre idea of "pick up the beer" is to select Entity2? No matter what entity 2 IS??? HR needs to see you, this is getting out of hand.
+						
+					let targetIndex = EntityList.findIndex ( (entity) => entity.name === entityName);
+						if(targetIndex > 0){
+							console.log(targetIndex);
+								EntityList[0].inventory.push({name:entityName, quantity: 1, conversationTree: EntityList[targetIndex].conversationTree});
+								InventoryUI.update(EntityList[0]);
+								EntityList[targetIndex].remove();
+								
+						}else {
+							console.log("Too Bad, buddy...Looks like its Jan 17, 1920 through Dec 5, 1933.");
+						}
+				
+			}
+			function placeEntity(entityName){
+				if(EntityList[0].inventory.findIndex( (item) => item.name === entityName ) > 0){ 
+					
+					EntityList.push( new Entity(entityName, EntityList[0].x + 400, EntityList[0].y+200, 200, "NPC", entityName) ); 
+					let newBeerIndex = EntityList.findLast( (entity) => entity.name === entityName);
+					newBeerIndex.targetedPos = {x: EntityList[0].x + 400, y: EntityList[0].y+200};
+					newBeerIndex.conversationTree = EntityList[0].inventory[EntityList[0].inventory.findIndex( (item) => item.name === entityName )].conversationTree;
+				
+					EntityList[0].inventory[ EntityList[0].inventory.findIndex( (item) => item.name === entityName ) ] = {name: "Empty", quantity: 0}; 
+					InventoryUI.update(EntityList[0]);
+					
+					
+				}else {
+					console.log("No beer in player inventory to place...")
+				}
+
+			}
+			
+				//Check and see if the player is drinking, then give them the effect
+			
+			let drunkInterval = setInterval(() => {
+				if(currentRoom === "Bar Room" || currentRoom === "Bar Room (Dark)"){
+					document.getElementById(EntityList[1].name).style.opacity = 0;
+					document.getElementById(EntityList[2].name).style.opacity = 0;
+					if(conversationNode === "drink"){
+					clearInterval(drunkInterval);
+						let valueOfHue = 0;
+									DrunkEffectInterval = setInterval(() => {
+										document.getElementById("Eugene").style.filter = "hue-rotate(" + valueOfHue + "deg)";
+											document.getElementById(EntityList[1].name).style.opacity = (valueOfHue % 360) / 100;
+											document.getElementById(EntityList[2].name).style.opacity = (valueOfHue % 360) / 100;
+										valueOfHue++;
+										if (valueOfHue > 350) {
+										document.getElementById(EntityList[1].name).style.opacity = 1;
+										document.getElementById(EntityList[2].name).style.opacity = 1;
+										clearInterval(DrunkEffectInterval) };
+									}, 16);
+						
+					};
+				};
+			}, FRAMERATE)
+			
+			let pickupInterval = setInterval(() => {
+				if(conversationNode === "take"){
+					console.log("Taking " + EntityList[0].targetedEntity.name);
+					takeEntity(EntityList[0].targetedEntity.name);
+					conversationNode = "start";
+					UpdateConversationDisplay();
+				};
+				if(conversationNode === "place"){
+					console.log("Placing " + EntityList[0].targetedEntity.name);
+					switch(conversationTree){
+						case BeerTalk:
+							placeEntity("Beer");
+							break;
+						case RumTalk:
+							placeEntity("Rum");
+							break;
+						case WhiskyTalk:
+							placeEntity("Whisky");
+							break;
+						case WineTalk:
+							placeEntity("Wine");
+							break;
+					}
+					
+					conversationNode = "start";
+					UpdateConversationDisplay();
+				}
+			}, FRAMERATE)
 			
 			//DEV TOOLKIT
 			
@@ -1134,104 +1505,41 @@
 						
 			//ROOM BUTTONS GO HERE
 				
-				//BAR ROOM WITH LIGHTS
-					this.barRoomButton = document.createElement("button");
-					
-					this.barRoomButton.innerHTML = "BAR ROOM";
-					
-					this.barRoomButton.onclick = () => {
-						BarRoom.generate();
-						
-						let drinkingInterval = setInterval( () => {
-									if(conversationNode === "drink"){
-										drunkMeter += 0.1;
-										conversationNode = "label";
-										UpdateConversationDisplay();
-										
-									}
-								}, FRAMERATE);
-						
-						let DrunkInterval = setInterval(() => {
-									document.getElementById("Wendigo").style.opacity = drunkMeter;
-								}, FRAMERATE);
-					}
-					this.element.appendChild(this.barRoomButton);
-					
-					
-					//BAR ROOM WITH LIGHTS OFF
-					this.barRoomDarkButton = document.createElement("button");
-					
-					this.barRoomDarkButton.innerHTML = "BAR ROOM (LIGHTS OFF)";
-					
-					this.barRoomDarkButton.onclick = () => {
-						BarRoomDark.generate();
-						
-						let drinkingInterval = setInterval( () => {
-									if(conversationNode === "drink"){
-										drunkMeter += 0.1;
-										conversationNode = "label";
-										UpdateConversationDisplay();
-										
-									}
-								}, FRAMERATE);
-						
-						let DrunkInterval = setInterval(() => {
-									
-									document.getElementById("Wendigo").style.opacity = drunkMeter;
-								}, FRAMERATE);
-					}
-					this.element.appendChild(this.barRoomDarkButton);
-					
-					//ALLEY WAY
-					this.AlleyButton = document.createElement("button");
-					
-					this.AlleyButton.innerHTML = "ALLEYWAY";
-					
-					this.AlleyButton.onclick = () => {
-						AlleyWay.generate();
-						
-							let sideInterval = setInterval( () => {
-								if(EntityList[0].x > 1500){
-									clearInterval(doorInterval);
-									clearInterval(sideInterval);
-									
-									AlleyWaySide.generate();
-								}
-							}, FRAMERATE)
-								
-							let doorInterval = setInterval( () => {
-								if(EntityList[0].x > 370 && EntityList[0].x < 520 && EntityList[0].y > 0 && EntityList[0].y < 275){
-									
-									clearInterval(doorInterval);
-									clearInterval(sideInterval);
-									BarRoomDark.generate();
-									
-									let drinkingInterval = setInterval( () => {
-										if(conversationNode === "drink"){
-											drunkMeter += 0.1;
-											conversationNode = "label";
-											UpdateConversationDisplay();
-										
-										}
-									}, FRAMERATE);
-						
-									let DrunkInterval = setInterval(() => {
-										document.getElementById("Wendigo").style.opacity = drunkMeter;
-									}, FRAMERATE);
-								}
-							}, FRAMERATE)
-					}
-					this.element.appendChild(this.AlleyButton);
-					
+			
 				//LINK ROOMS BUTTON (THIS MIGHT BE TEMPORARY)
 					this.LinkDoorsButton = document.createElement("button");
 					
-					this.LinkDoorsButton.innerHTML = "Link Rooms with doors (Experimental! Need to press in each room)";
+					this.LinkDoorsButton.innerHTML = "Link Doors";
 					
 					this.LinkDoorsButton.onclick = () => {
 						linkDoors();
 					};
 					this.element.appendChild(this.LinkDoorsButton);
+					
+				//DRUNK EUGENE EFFECT (Yes this is absolutely gonna be a selling point later on okay?)
+					this.DrunkEffectButton = document.createElement("button");
+					
+					this.DrunkEffectButton.innerHTML = "DrunkEffectButton";
+					
+					// Declare DrunkEffectInterval outside of the onclick function
+						let DrunkEffectInterval;
+
+						this.DrunkEffectButton.onclick = () => {
+							if (!DrunkEffectInterval) {
+								let valueOfHue = 0;
+								DrunkEffectInterval = setInterval(() => {
+									document.getElementById("Eugene").style.filter = "hue-rotate(" + valueOfHue + "deg)";
+									valueOfHue++;
+									if (valueOfHue > 360) { valueOfHue = 1; };
+								}, 16);
+							} else {
+								clearInterval(DrunkEffectInterval);
+								document.getElementById("Eugene").style.filter = "hue-rotate(0deg)";
+								DrunkEffectInterval = undefined; // Reset the variable when clearInterval is called
+							}
+						};
+
+						this.element.appendChild(this.DrunkEffectButton);
 				
 				//CLEAR ROOM
 					
@@ -1245,7 +1553,30 @@
 					
 						this.element.appendChild(this.clearButton);
 						
-						
+				
+				//WEAPON COMMAND
+				
+					this.weaponSelector = document.createElement("select");
+					this.weaponSelector.id = "weaponSelector";
+					
+						// Assuming weaponContainer is an array of objects
+							for (let i = 0; i < weaponContainer.length; i++) {
+							  let optionsElement = document.createElement("option");
+							  optionsElement.text = weaponContainer[i].name;
+							  optionsElement.value = i; // Use the index as the value
+							  this.weaponSelector.appendChild(optionsElement);
+							}
+
+							this.weaponSubmit = document.createElement("button");
+							this.weaponSubmit.innerHTML = "SUBMIT";
+							this.weaponSubmit.onclick = () => {
+								
+								EntityList[0].weapon = weaponContainer[document.getElementById("weaponSelector").value];
+							}
+
+					this.element.appendChild(this.weaponSubmit);
+					this.element.appendChild(this.weaponSelector);
+				
 				//MOVEMENT button
 					this.controlsButton = document.createElement("button");
 					this.controlsButton.innerHTML = "CHANGE CONTROLS (WASD)";
