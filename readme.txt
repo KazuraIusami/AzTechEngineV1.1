@@ -104,5 +104,38 @@ Using the great art by https://www.instagram.com/guiigs.art/ for the sprite I ha
 	Dedicating time to plan the door addition to the room class. I think I will have an array for every room that starts empty, and then a method called addDoor which will add an Interval to the array that will check for door collision. And when I change rooms, I can use the array to clear all the intervals.
 	Hopefully thats a sound plan.
 
-		After some time: the plan worked alright, except there are still a few bugs to work out. Since every door clears the previous rooms doors, it doesnt really solve the problems I was having...
+	Okay, so the room class now has a method called addRoom. It has the arguments : (xMin, xMax, yMin, yMax, destination). I also have a "link doors" function to call after the rooms have been created. The linkDoors function is interesting, because it just starts an interval that will end itself and generate the next 
+		room. Then, in the generate function, the linkDoors function is called. Almost seamless.
+	Also added a really fun little test function set, takeBeer() and placeBeer()
 
+() 12/19/23
+	Been doing a lot of QoL stuff, and just getting a better understanding of what I have thus far. 
+	I am dedicating time to change how the direction faced with the entities works. Its a strange thing to put time toward, but itll be worth it.
+	BEFORE: When trying to move diagonally, the sprite would revert to the idle position. This was happening because the distanceToTarget.x and distanceToTarget.y were the same and that makes the computer wizards angry.
+	AFTER: The program instead sets the direction faced only, and THEN checks to see if the distance is greater than 1 on either axis. If it is, set it to the walking animation. The faced direction happens because of the already existing code.
+
+() 12/20/23
+	Discovered a strange bug where Wendigo isnt despawning when I leave the bar...work to be done.
+
+	Also discovered  hue-rotate in css so of course I added a "drunk effect" to eugene where his colors cycle through. Kinda fun and quirky but its nothing special. I am considering using this to create some sort of "magic" system or something?
+
+() 12/24/24
+	The previous bug where the Entity List wasnt clearing is fixed, pretty sure it had a lot to do with the clearEntities function, so I changed it a little bit "let i = EntityList.length ; i > 0; i--" So it goes DOWN the entity list rather than up. Little bit more effecient plus to wont remove the player.
+	
+	I changed the fun little test function takeBeer() and placeBeer() to instead be takeEntity(entityName) and placeEntity(entityName). Still not perfect, as putting down a bottle doesnt apply the conversation tree yet, and the functions need to be called manually from the console...but that would be an easy plug and play
+	Added a new interval to the entity class that is constantly making the this.attackPower = (weapon.tier * weapon.type)*(weapon.tier * weapon.type);
+
+	Yep, time for weapons and stuff. So get your glasses on old man, time to read up. 
+	A weapon is an object with three main variables. I DO NOT have a class set up for weapons yet, although that might come later. So far it is just an object assigned to an entity under the this.weapon name. 
+	this.weapon = {NAME, TIER, TYPE}
+	A weapons damage is calculated as this.attackPower = (weapon.tier * weapon.type)*(weapon.tier * weapon.type); or dmg=(tier*type)squared. Eventually, I want the entity to be given a strength value to decides what PERCENT OF FULL DAMAGE TO DO.
+
+() 1/1/24
+	Working on the "distance seizure" glitch. Basically, if I set the players movespeed to anything above 1, then the player will spaz out rather than stop. Kind of hard to really explain, but it is an intuitive problem. If my movespeed is 2, and my target is 1 away, then I can ONLY overshoot it. 
+
+() 1/2/24
+	Still need to work on the distance seizure glitch, its a tough shell to crack. Also trying something interesting. Basically, I want to make the Entity size dependant on the y value, which would give the illusion of distance between the camera and the entity. Big problems though, as changing the size of the entity will also 
+	make it go a little to the left...and it isnt as simple as adding half of the size to the x, as much as I wish that would work.
+
+() 1/10/24
+	Progress is slow, but I have added a weapon selector with a weapon container that you can choose from in the dev tools. Still fun. But the size thing is still a big problem. 
